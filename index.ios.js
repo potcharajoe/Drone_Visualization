@@ -28,24 +28,129 @@ export default class Drone_visualization extends Component {
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
-      markers:[
-      {
-        latlng:{
-          latitude:13.9,
-          longitude:100.8
+      markers: {
+        1: {
+          latlng:{
+            latitude:13.9,
+            longitude:100.8
+          },
+          title:'Station',      
+          description:'position of station'
         },
-        title:'Station',      
-        description:'position of station',
+        2 : {
+          latlng:{
+            latitude:13.9,
+            longitude:100.8
+          },
+          title:'Drone1',      
+          description:'position of station'
+        },
+        3: {
+          latlng:{
+            latitude:13.9,
+            longitude:100.8
+          },
+          title:'Drone2',
+          description:'position of station'
+        },
+        4: {
+          latlng:{
+            latitude:13.9,
+            longitude:100.8
+          },
+          title:'Drone3',
+          description:'position of station'
+        },
+        5: {
+          latlng:{
+            latitude:13.9,
+            longitude:100.8
+          },
+          title:'Destination',
+          description:'position of station'
+        }
       }
-      ]
     };
   }
 
   componentWillMount() {
       axios.get('http://localhost:9090/api/')
+        .then(response => {
+          // console.log(response.data.lat)
+          this.setState({
+          markers: {
+            ...this.state.markers,
+            1: {
+              latlng:{
+                latitude:response.data.lat,
+                longitude:response.data.lon
+              },
+              title:'Station',      
+              description:'position of station',     
+            }
+          }
+        })}
+      );
+      axios.get('http://localhost:9090/api/')
         .then(response => this.setState({
-
-        }));
+          markers: {
+            ...this.state.markers,
+            2: {
+              latlng:{
+                latitude:200,
+                longitude:200
+              },
+              title:'Drone1',      
+              description:'position of station',     
+            }
+          }
+        })
+      );
+      axios.get('http://localhost:9090/api/')
+        .then(response => this.setState({
+          markers: {
+            ...this.state.markers,
+            3: {
+              latlng:{
+                latitude:200,
+                longitude:200
+              },
+              title:'Drone2',      
+              description:'position of station',     
+            }
+          }
+        })
+      );
+      axios.get('http://localhost:9090/api/')
+        .then(response => this.setState({
+          markers: {
+            ...this.state.markers,
+            4: {
+              latlng:{
+                latitude:200,
+                longitude:200
+              },
+              title:'Drone3',      
+              description:'position of station',     
+            }
+          }
+        })
+      );
+      axios.get('http://localhost:9090/api/')
+        .then(response => this.setState({
+          markers: {
+            ...this.state.markers,
+            5: {
+              latlng:{
+                latitude:200,
+                longitude:200
+              },
+              title:'Destination',      
+              description:'position of station',     
+            }
+          }
+        })
+      );  
     }
 
   onRegionChange(region) {
@@ -55,16 +160,16 @@ export default class Drone_visualization extends Component {
     });
   }
 
-  onPress(cor,pos) {
-    console.log(cor,pos)
-    this.setState({
-      cor,pos,
-    });
-  }
+  // onPress(cor,pos) {
+  //   console.log(cor,pos)
+  //   this.setState({
+  //     cor,pos,
+  //   });
+  // }
 
 
   render() {
-    console.log(this.state.markers[0])
+    console.log(Object.values(this.state.markers))
     return (
       <View style={{flex:1}}>
       <MapView style={{flex:1}}
@@ -73,10 +178,10 @@ export default class Drone_visualization extends Component {
         showsMyLocationButton = {true}
         loadingEnabled = {true}
         onRegionChange={ (x)=>this.onRegionChange(x)}
-        onPress = { (a)=>console.log(a) }
       >
-        {this.state.markers.map(marker => (
+        {Object.values(this.state.markers).map(marker => (
         <MapView.Marker
+            key = {marker.title}
             coordinate={marker.latlng}
             title={marker.title}
             description={marker.description}
@@ -87,22 +192,6 @@ export default class Drone_visualization extends Component {
     );
   }
 
-//   render() {
-//     return (
-//     <View style={{flex:1}}>
-
-//        <MapView style = {{flex:1,margin:10}}
-//         userLocationAnnotationTitle = {this.state.annotate}
-//         region={
-//           this.state.region
-//         }
-//         onRegionChange = { (x)=> this.changeLocation(x) }/>
-//      <View style={{flex:1}}>
-      
-//      </View>
-// </View>
-//     );
-//   }
 }
 
 const styles = StyleSheet.create({
