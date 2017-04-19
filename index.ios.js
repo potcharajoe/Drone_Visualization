@@ -24,7 +24,7 @@ export default class Drone_visualization extends Component {
       annotate: 'My Locaition :D',
       region: {
         latitude: 13.8463,
-        longitude: 100.5685,
+        longitude: 100.5687,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       },
@@ -73,7 +73,29 @@ export default class Drone_visualization extends Component {
     };
   }
 
+  setWindow(pos){
+    const lat = pos.coords.latitude
+    const lon = pos.coords.longitude
+    const acc = pos.coords.accuracy
+    const oneDegLatInMeters = 111320
+    const circumference = (40075/360)*1000
+    const latDelta = acc * (1 / (Math.cos(lat) * circumference))
+    const lonDelta = (acc / oneDegLatInMeters)
+
+    this.setState({
+      region:{
+        latitude: lat,
+        longitude: lon,
+        latitudeDelta: latDelta,
+        longitudeDelta: lonDelta,
+      }
+    })
+  }
+
   componentWillMount() {
+      navigator.geolocation.getCurrentPosition(
+          pos => this.setWindow(pos)
+        )
       axios.get('http://localhost:9090/api/')
         .then(response => {
           // console.log(response.data.lat)
@@ -159,13 +181,6 @@ export default class Drone_visualization extends Component {
       region,
     });
   }
-
-  // onPress(cor,pos) {
-  //   console.log(cor,pos)
-  //   this.setState({
-  //     cor,pos,
-  //   });
-  // }
 
 
   render() {
