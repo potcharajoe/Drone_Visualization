@@ -69,25 +69,30 @@ export default class Drone_visualization extends Component {
           title:'Destination',
           description:'position of station'
         }
-      }
+      },
+      polylines:[
+        { latitude: 37.785834, longitude: -122.406417 },
+        { latitude: 37.805834, longitude: -122.406417 },
+        { latitude: 37.785834, longitude: -122.426417 },
+        { latitude: 37.785834, longitude: -122.406417 },
+      ]
     };
   }
 
   setWindow(pos){
     const lat = pos.coords.latitude
     const lon = pos.coords.longitude
-    const acc = pos.coords.accuracy
-    const oneDegLatInMeters = 111320
-    const circumference = (40075/360)*1000
-    const latDelta = acc * (1 / (Math.cos(lat) * circumference))
-    const lonDelta = (acc / oneDegLatInMeters)
-
+    // const acc = pos.coords.accuracy
+    // const oneDegLatInMeters = 111320
+    // const circumference = (40075/360)*1000
+    // const latDelta = acc * (1 / (Math.cos(lat) * circumference))
+    // const lonDelta = (acc / oneDegLatInMeters)
     this.setState({
       region:{
         latitude: lat,
         longitude: lon,
-        latitudeDelta: latDelta,
-        longitudeDelta: lonDelta,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
       }
     })
   }
@@ -202,6 +207,9 @@ export default class Drone_visualization extends Component {
             description={marker.description}
             />
           ))}  
+            <MapView.Polyline 
+              coordinates = {this.state.polylines}
+            />
         </MapView>
         </View>
     );
