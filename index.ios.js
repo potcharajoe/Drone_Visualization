@@ -70,20 +70,15 @@ export default class Drone_visualization extends Component {
           description:'position of station'
         }
       },
-      polylines:[
-        { latitude: 37.785834, longitude: -122.406417 },
-        { latitude: 37.805834, longitude: -122.406417 },
-        { latitude: 37.785834, longitude: -122.426417 },
-        // { latitude: 37.785834, longitude: -122.406417 },
-      ]
+      polylines:{}
     };
   }
 
-  addLinetoPoint(){
-    this.setState({
-      polylines:[...this.state.polylines,{ latitude: 37.785834, longitude: -122.406417 }]
-    })
-  }
+  // addLinetoPoint(){
+  //   this.setState({
+  //     polylines:[...this.state.polylines,{ latitude: 37.785834, longitude: -122.406417 }]
+  //   })
+  // }
 
   setWindow(pos){
     const lat = pos.coords.latitude
@@ -103,7 +98,7 @@ export default class Drone_visualization extends Component {
     })
   }
 
-  componentWillMount() {
+  componentWillMount(){
       navigator.geolocation.getCurrentPosition(
           pos => this.setWindow(pos)
         )
@@ -123,8 +118,16 @@ export default class Drone_visualization extends Component {
               title:'Station',      
               description:'position of station',     
             }
+          },
+          polylines:{
+            ...this.state.polylines,
+            1:{
+              latitude:response.data.lat,
+              longitude:response.data.lon
+            }
           }
-        })}
+        }
+        )}
       );
       // axios.get('http://localhost:9090/api/point1')
       axios.get('http://158.108.139.33:9090/api/point1')
@@ -141,6 +144,13 @@ export default class Drone_visualization extends Component {
               },
               title:'Drone1',      
               description:'position of point1',     
+            }
+          },
+          polylines:{
+            ...this.state.polylines,
+            2:{
+              latitude:response.data.lat/10000000,
+              longitude:response.data.lon/10000000
             }
           }
         })
@@ -162,6 +172,13 @@ export default class Drone_visualization extends Component {
               title:'Drone2',      
               description:'position of point2',     
             }
+          },
+            polylines:{
+              ...this.state.polylines,
+            3: {
+              latitude:response.data.lat/10000000,
+              longitude:response.data.lon/10000000
+            }
           }
         })
         }
@@ -181,6 +198,13 @@ export default class Drone_visualization extends Component {
               },
               title:'Drone3',      
               description:'position of point3',     
+            }
+          },
+          polylines:{
+            ...this.state.polylines,
+            4: {
+              latitude:response.data.lat/10000000,
+              longitude:response.data.lon/10000000
             }
           }
         })
@@ -202,11 +226,19 @@ export default class Drone_visualization extends Component {
               title:'Destination',      
               description:'position of destination',     
             }
+          },
+          polylines:{
+            ...this.state.polylines,
+            5:{
+              latitude:response.data.lat,
+              longitude:response.data.lon
+            }
           }
         })
         }
-      );  
+      ); 
     }
+    
 
   // componentDidMount(){
   //   setInterval( ()=>{
@@ -234,9 +266,14 @@ export default class Drone_visualization extends Component {
     });
   }
 
+  printStuffs(){
+    console.log(this.state.markers)
+  }
 
-  render() {
+
+  render(){
     console.log(Object.values(this.state.markers))
+    // (second ? console.log('second'): console.log('KUY'))
     return (
       <View style={{flex:1}}>
       <MapView style={{flex:1}}
@@ -245,7 +282,7 @@ export default class Drone_visualization extends Component {
         showsMyLocationButton = {true}
         loadingEnabled = {true}
         onRegionChange={ (x)=>this.onRegionChange(x)}
-        onPress={ ()=>this.addLinetoPoint() }
+        onPress={()=>this.printStuffs()}
       >
         {Object.values(this.state.markers).map(marker => (
         <MapView.Marker
@@ -256,7 +293,7 @@ export default class Drone_visualization extends Component {
             />
           ))}  
             <MapView.Polyline 
-              coordinates = {this.state.polylines}
+              coordinates = {Object.values(this.state.polylines)}
             />
         </MapView>
         </View>
