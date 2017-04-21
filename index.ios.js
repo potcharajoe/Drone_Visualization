@@ -21,7 +21,7 @@ export default class Drone_visualization extends Component {
     super(props);
     this.state = {
       showText: true,
-      annotate: 'My Locaition :D',
+      annotate: 'My Location :D',
       region: {
         latitude: 13.8463,
         longitude: 100.5687,
@@ -31,8 +31,8 @@ export default class Drone_visualization extends Component {
       markers: {
         1: {
           latlng:{
-            latitude:13.9,
-            longitude:100.8
+            latitude:13.846680,
+            longitude:100.565630
           },
           title:'Station',      
           description:'position of station'
@@ -74,9 +74,15 @@ export default class Drone_visualization extends Component {
         { latitude: 37.785834, longitude: -122.406417 },
         { latitude: 37.805834, longitude: -122.406417 },
         { latitude: 37.785834, longitude: -122.426417 },
-        { latitude: 37.785834, longitude: -122.406417 },
+        // { latitude: 37.785834, longitude: -122.406417 },
       ]
     };
+  }
+
+  addLinetoPoint(){
+    this.setState({
+      polylines:[...this.state.polylines,{ latitude: 37.785834, longitude: -122.406417 }]
+    })
   }
 
   setWindow(pos){
@@ -101,9 +107,11 @@ export default class Drone_visualization extends Component {
       navigator.geolocation.getCurrentPosition(
           pos => this.setWindow(pos)
         )
-      axios.get('http://localhost:9090/api/')
+      // axios.get('http://localhost:9090/api/station')
+      axios.get('http://158.108.139.33:9090/api/station')
         .then(response => {
-          // console.log(response.data.lat)
+          console.log(response.data.lat)
+          console.log(response.data.lon)
           this.setState({
           markers: {
             ...this.state.markers,
@@ -118,67 +126,106 @@ export default class Drone_visualization extends Component {
           }
         })}
       );
-      axios.get('http://localhost:9090/api/')
-        .then(response => this.setState({
+      // axios.get('http://localhost:9090/api/point1')
+      axios.get('http://158.108.139.33:9090/api/point1')
+        .then(response => {
+          console.log(response.data.lat/10000000)
+          console.log(response.data.lon/10000000)
+          this.setState({
           markers: {
             ...this.state.markers,
             2: {
               latlng:{
-                latitude:200,
-                longitude:200
+                latitude:response.data.lat/10000000,
+                longitude:response.data.lon/10000000
               },
               title:'Drone1',      
-              description:'position of station',     
+              description:'position of point1',     
             }
           }
         })
+      }
       );
-      axios.get('http://localhost:9090/api/')
-        .then(response => this.setState({
+      // axios.get('http://localhost:9090/api/point2')
+      axios.get('http://158.108.139.33:9090/api/point2')
+        .then(response => {
+          console.log(response.data.lat/10000000)
+          console.log(response.data.lon/10000000)
+          this.setState({
           markers: {
             ...this.state.markers,
             3: {
               latlng:{
-                latitude:200,
-                longitude:200
+                latitude:response.data.lat/10000000,
+                longitude:response.data.lon/10000000
               },
               title:'Drone2',      
-              description:'position of station',     
+              description:'position of point2',     
             }
           }
         })
+        }
       );
-      axios.get('http://localhost:9090/api/')
-        .then(response => this.setState({
+      // axios.get('http://localhost:9090/api/point3')
+      axios.get('http://158.108.139.33:9090/api/point3')
+        .then(response => {
+          console.log(response.data.lat/10000000)
+          console.log(response.data.lon/10000000)
+          this.setState({
           markers: {
             ...this.state.markers,
             4: {
               latlng:{
-                latitude:200,
-                longitude:200
+                latitude:response.data.lat/10000000,
+                longitude:response.data.lon/10000000
               },
               title:'Drone3',      
-              description:'position of station',     
+              description:'position of point3',     
             }
           }
         })
+        }
       );
-      axios.get('http://localhost:9090/api/')
-        .then(response => this.setState({
+      // axios.get('http://localhost:9090/api/destination')
+      axios.get('http://158.108.139.33:9090/api/destination')
+        .then(response => {
+          console.log(response.data.lat)
+          console.log(response.data.lon)
+          this.setState({
           markers: {
             ...this.state.markers,
             5: {
               latlng:{
-                latitude:200,
-                longitude:200
+                latitude:response.data.lat,
+                longitude:response.data.lon
               },
               title:'Destination',      
-              description:'position of station',     
+              description:'position of destination',     
             }
           }
         })
+        }
       );  
     }
+
+  // componentDidMount(){
+  //   setInterval( ()=>{
+  //     this.setState({
+  //       markers: {
+  //         ...this.state.markers,
+  //         1:{
+  //           latlng:{
+  //             latitude:this.state.markers[1].latlng.latitude,
+  //             longitude:this.state.markers[1].latlng.longitude+0.0001
+  //           },
+  //           title:'Station',
+  //           description:'position of station'
+  //         }
+  //       }
+  //     })
+  //     }, 5000)
+  // }
+
 
   onRegionChange(region) {
     console.log(region)
@@ -198,6 +245,7 @@ export default class Drone_visualization extends Component {
         showsMyLocationButton = {true}
         loadingEnabled = {true}
         onRegionChange={ (x)=>this.onRegionChange(x)}
+        onPress={ ()=>this.addLinetoPoint() }
       >
         {Object.values(this.state.markers).map(marker => (
         <MapView.Marker
