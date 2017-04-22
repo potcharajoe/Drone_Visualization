@@ -128,7 +128,7 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon
               },
               title:'Station',      
-              description:'position of station',
+              description:'lat : ' + response.data.lat + '   lon : ' + response.data.lon,
               img:require('./src/img/station.png')
             }
           },
@@ -156,7 +156,7 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone1',      
-              description:'position of point1',
+              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
               img:require('./src/img/drone_pin.png')
             }
           },
@@ -184,7 +184,7 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone2',      
-              description:'position of point2',
+              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
               img:require('./src/img/drone_pin.png')
             }
           },
@@ -212,7 +212,7 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone3',      
-              description:'position of point3',
+              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
               img:require('./src/img/drone_pin.png')
             }
           },
@@ -240,7 +240,7 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon
               },
               title:'Destination',      
-              description:'position of destination',
+              description:'lat : ' + response.data.lat + '   lon : ' + response.data.lon,
               img:require('./src/img/destination.png')
             }
           },
