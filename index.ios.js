@@ -31,11 +31,12 @@ export default class Drone_visualization extends Component {
       markers: {
         1: {
           latlng:{
-            latitude:13.846680,
-            longitude:100.565630
+            latitude:13.9,
+            longitude:100.8
           },
           title:'Station',      
-          description:'position of station'
+          description:'position of station',
+          img:''
         },
         2 : {
           latlng:{
@@ -43,7 +44,8 @@ export default class Drone_visualization extends Component {
             longitude:100.8
           },
           title:'Drone1',      
-          description:'position of station'
+          description:'position of station',
+          img:''
         },
         3: {
           latlng:{
@@ -51,7 +53,8 @@ export default class Drone_visualization extends Component {
             longitude:100.8
           },
           title:'Drone2',
-          description:'position of station'
+          description:'position of station',
+          img:''
         },
         4: {
           latlng:{
@@ -59,7 +62,8 @@ export default class Drone_visualization extends Component {
             longitude:100.8
           },
           title:'Drone3',
-          description:'position of station'
+          description:'position of station',
+          img:''
         },
         5: {
           latlng:{
@@ -67,7 +71,8 @@ export default class Drone_visualization extends Component {
             longitude:100.8
           },
           title:'Destination',
-          description:'position of station'
+          description:'position of station',
+          img:''
         }
       },
       polylines:{},
@@ -123,7 +128,8 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon
               },
               title:'Station',      
-              description:'position of station',     
+              description:'position of station',
+              img:require('./src/img/station.png')
             }
           },
           polylines:{
@@ -150,7 +156,8 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone1',      
-              description:'position of point1',     
+              description:'position of point1',
+              img:require('./src/img/drone_pin.png')
             }
           },
           polylines:{
@@ -177,7 +184,8 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone2',      
-              description:'position of point2',     
+              description:'position of point2',
+              img:require('./src/img/drone_pin.png')
             }
           },
             polylines:{
@@ -204,7 +212,8 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon/10000000
               },
               title:'Drone3',      
-              description:'position of point3',     
+              description:'position of point3',
+              img:require('./src/img/drone_pin.png')
             }
           },
           polylines:{
@@ -231,7 +240,8 @@ export default class Drone_visualization extends Component {
                 longitude:response.data.lon
               },
               title:'Destination',      
-              description:'position of destination',     
+              description:'position of destination',
+              img:require('./src/img/destination.png')
             }
           },
           polylines:{
@@ -244,7 +254,7 @@ export default class Drone_visualization extends Component {
         })
         }
       ); 
-      }, 5000)
+      }, 1000)
     }
     
 
@@ -281,7 +291,7 @@ export default class Drone_visualization extends Component {
 
   render(){
     let second = true;
-    console.log(Object.values(this.state.markers));
+    // console.log(Object.values(this.state.image));
     delete this.state.polylines[3];
     return (
       <View style={{flex:1}}>
@@ -299,10 +309,12 @@ export default class Drone_visualization extends Component {
             coordinate={marker.latlng}
             title={marker.title}
             description={marker.description}
+            image={marker.img}
             />
           ))}  
             <MapView.Polyline 
               coordinates = {Object.values(this.state.polylines)}
+              strokeColor='#37BF2A'
             />
         </MapView>
         </View>
