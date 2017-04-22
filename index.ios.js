@@ -70,7 +70,12 @@ export default class Drone_visualization extends Component {
           description:'position of station'
         }
       },
-      polylines:{}
+      polylines:{},
+      used:{
+        d1:true,
+        d2:true,
+        d3:false
+      }
     };
   }
 
@@ -98,10 +103,12 @@ export default class Drone_visualization extends Component {
     })
   }
 
+
   componentWillMount(){
-      navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.getCurrentPosition(
           pos => this.setWindow(pos)
         )
+    setInterval( ()=>{
       // axios.get('http://localhost:9090/api/station')
       axios.get('http://158.108.139.33:9090/api/station')
         .then(response => {
@@ -237,6 +244,7 @@ export default class Drone_visualization extends Component {
         })
         }
       ); 
+      }, 5000)
     }
     
 
@@ -272,8 +280,9 @@ export default class Drone_visualization extends Component {
 
 
   render(){
-    console.log(Object.values(this.state.markers))
-    // (second ? console.log('second'): console.log('KUY'))
+    let second = true;
+    console.log(Object.values(this.state.markers));
+    delete this.state.polylines[3];
     return (
       <View style={{flex:1}}>
       <MapView style={{flex:1}}
