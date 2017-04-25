@@ -13,8 +13,11 @@ import {
   Button
 } from 'react-native';
 
+import _ from 'lodash';
 import MapView from 'react-native-maps';
 import axios from 'axios';
+
+let configApi = 'http://10.2.32.124:9090/api'
 
 export default class Drone_visualization extends Component {
   constructor(props) {
@@ -76,11 +79,9 @@ export default class Drone_visualization extends Component {
         }
       },
       polylines:{},
-      used:{
-        d1:true,
-        d2:true,
-        d3:false
-      }
+      allpath:{},
+      used:{},
+      connected:{}
     };
   }
 
@@ -115,7 +116,8 @@ export default class Drone_visualization extends Component {
         )
     setInterval( ()=>{
       // axios.get('http://localhost:9090/api/station')
-      axios.get('http://158.108.139.33:9090/api/station')
+      axios.get(`${configApi}/station`)
+      // axios.get('http://192.168.1.33:9090/api/station')
         .then(response => {
           console.log(response.data.lat)
           console.log(response.data.lon)
@@ -143,91 +145,117 @@ export default class Drone_visualization extends Component {
         )}
       );
       // axios.get('http://localhost:9090/api/point1')
-      axios.get('http://158.108.139.33:9090/api/point1')
+      axios.get(`${configApi}/point1_move`)
+      // axios.get('http://192.168.1.33:9090/api/point1')
         .then(response => {
-          console.log(response.data.lat/10000000)
-          console.log(response.data.lon/10000000)
+          console.log('HEHEHEHEHEHEHEHEHE')
+          // console.log(response.data.lat/10000000)
+          // console.log(response.data.lon/10000000)
+          console.log(response.data.lat)
+          console.log(response.data.lon)
           this.setState({
           markers: {
             ...this.state.markers,
             2: {
               latlng:{
-                latitude:response.data.lat/10000000,
-                longitude:response.data.lon/10000000
+                // latitude:response.data.lat/10000000,
+                // longitude:response.data.lon/10000000
+                latitude:response.data.lat,
+                longitude:response.data.lon
+              
               },
               title:'Drone1',      
-              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
+              // description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
+              description:'lat : ' + response.data.lat + '   lon : ' + response.data.lon,
               img:require('./src/img/drone_pin.png')
             }
           },
           polylines:{
             ...this.state.polylines,
             2:{
-              latitude:response.data.lat/10000000,
-              longitude:response.data.lon/10000000
+              // latitude:response.data.lat/10000000,
+              // longitude:response.data.lon/10000000
+                latitude:response.data.lat,
+                longitude:response.data.lon
+              
             }
           }
         })
       }
       );
       // axios.get('http://localhost:9090/api/point2')
-      axios.get('http://158.108.139.33:9090/api/point2')
+      axios.get(`${configApi}/point2_move`)
+      // axios.get('http://192.168.1.33:9090/api/point2')
         .then(response => {
-          console.log(response.data.lat/10000000)
-          console.log(response.data.lon/10000000)
+          // console.log(response.data.lat/10000000)
+          // console.log(response.data.lon/10000000)
+          console.log(response.data.lat)
+          console.log(response.data.lon)
           this.setState({
           markers: {
             ...this.state.markers,
             3: {
               latlng:{
-                latitude:response.data.lat/10000000,
-                longitude:response.data.lon/10000000
+                 // latitude:response.data.lat/10000000,
+                // longitude:response.data.lon/10000000
+                latitude:response.data.lat,
+                longitude:response.data.lon
               },
-              title:'Drone2',      
-              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
+              title:'Drone2',  
+              // description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,    
+              description:'lat : ' + response.data.lat + '   lon : ' + response.data.lon,
               img:require('./src/img/drone_pin.png')
             }
           },
-            polylines:{
-              ...this.state.polylines,
+          polylines:{
+            ...this.state.polylines,
             3: {
-              latitude:response.data.lat/10000000,
-              longitude:response.data.lon/10000000
+              latitude:response.data.lat,
+              longitude:response.data.lon
             }
           }
         })
         }
       );
       // axios.get('http://localhost:9090/api/point3')
-      axios.get('http://158.108.139.33:9090/api/point3')
+      axios.get(`${configApi}/point3_move`)
+      // axios.get('http://192.168.1.33:9090/api/point3')
         .then(response => {
-          console.log(response.data.lat/10000000)
-          console.log(response.data.lon/10000000)
+          // console.log(response.data.lat/10000000)
+          // console.log(response.data.lon/10000000)
+          console.log(response.data.lat)
+          console.log(response.data.lon)
           this.setState({
           markers: {
             ...this.state.markers,
             4: {
               latlng:{
-                latitude:response.data.lat/10000000,
-                longitude:response.data.lon/10000000
+                // latitude:response.data.lat/10000000,
+                // longitude:response.data.lon/10000000
+                latitude:response.data.lat,
+                longitude:response.data.lon
               },
               title:'Drone3',      
-              description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
+              // description:'lat : ' + response.data.lat/10000000 + '   lon : ' + response.data.lon/10000000,
+              description:'lat : ' + response.data.lat + '   lon : ' + response.data.lon,
               img:require('./src/img/drone_pin.png')
             }
           },
           polylines:{
             ...this.state.polylines,
             4: {
-              latitude:response.data.lat/10000000,
-              longitude:response.data.lon/10000000
+              // latitude:response.data.lat/10000000,
+              // longitude:response.data.lon/10000000
+              latitude:response.data.lat,
+              longitude:response.data.lon
             }
           }
         })
         }
       );
       // axios.get('http://localhost:9090/api/destination')
-      axios.get('http://158.108.139.33:9090/api/destination')
+      axios.get(`${configApi}/destination`)
+      // axios.get('http://192.168.1.33:9090/api/destination')
         .then(response => {
           console.log(response.data.lat)
           console.log(response.data.lon)
@@ -254,6 +282,51 @@ export default class Drone_visualization extends Component {
         })
         }
       ); 
+      axios.get(`${configApi}/trace_result`)
+      .then(response=>{
+        console.log(this.state.polylines[1])
+        this.setState({
+          allpath:response.data,
+          used:{
+            ...this.state.used,
+            0:this.state.polylines[1]
+          },
+          connected:{
+            ...this.state.connected,
+            0:this.state.polylines[1]
+          }
+        })
+        let c = {}
+        let nc = {}
+        _.mapKeys(this.state.allpath,(value,key)=>{
+          console.log(this.state.polylines)
+          if (+key == 3){
+            c[key] = this.state.polylines[+key+1]
+            nc[key] = this.state.polylines[+key+1]
+          }
+          else if (value){
+            c[key] = this.state.polylines[+key+1]
+          }
+          else if (!value){
+            nc[key] = this.state.polylines[+key+1]
+          }
+        })
+        this.setState({
+          used:{
+            ...this.state.used,
+            ...c,
+            5:this.state.polylines[5]
+          },
+          connected:{
+            ...this.state.connected,
+            ...nc,
+            5:this.state.polylines[5]
+          }
+        })
+          console.log(this.state.used)
+          console.log(this.state.connected)
+      }
+      );
       }, 1000)
     }
     
@@ -276,7 +349,6 @@ export default class Drone_visualization extends Component {
   //     }, 5000)
   // }
 
-
   onRegionChange(region) {
     console.log(region)
     this.setState({
@@ -285,14 +357,20 @@ export default class Drone_visualization extends Component {
   }
 
   printStuffs(){
-    console.log(this.state.markers)
+    console.log(this.state.used)
   }
 
+  // <MapView.Polyline 
+  //             coordinates = {[{latitude:13.84668,longitude:100.56563},{latitude:13.8467865,longitude:100.5660955},{latitude:13.8472410,longitude:100.5659489}]}
+  //             strokeColor='#37BF2A'
+  //             strokeWidth = {2}
+  //             lineDashPattern = {[2,3]}
+  //           />
 
   render(){
+    console.log(this.state.polylines)
     let second = true;
-    // console.log(Object.values(this.state.image));
-    delete this.state.polylines[3];
+    // console.log(Object.values(this.state.markers));
     return (
       <View style={{flex:1}}>
       <MapView style={{flex:1}}
@@ -311,11 +389,18 @@ export default class Drone_visualization extends Component {
             description={marker.description}
             image={marker.img}
             />
-          ))}  
-            <MapView.Polyline 
-              coordinates = {Object.values(this.state.polylines)}
+          ))} 
+          <MapView.Polyline 
+              coordinates = {Object.values(this.state.used)}
               strokeColor='#37BF2A'
+              strokeWidth = {2}
             />
+            <MapView.Polyline 
+              coordinates = {Object.values(this.state.connected)}
+              strokeColor='#37BF2A'
+              strokeWidth = {2}
+              lineDashPattern = {[2,3]}
+            /> 
         </MapView>
         </View>
     );
