@@ -120,9 +120,6 @@ def sim_drone_gps(src,des1,des2,des3):
 		
 		i += 1
 		time.sleep(0.5)
-	
-	# while True:
-	# 	if  
 
 def calculateWP_mode1(station_point,node_point,number_of_drone_for_create_connection,number_of_all_drone):
     list_of_waypoint = []
