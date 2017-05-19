@@ -1,0 +1,1 @@
+GPS_RAW_INT {time_usec : 17251000, fix_type : 3, lat : 138468188, lon : 1005695964, alt : 13070, eph : 517, epv : 65535, vel : 337, cog : 9159, satellites_visible : 4}
