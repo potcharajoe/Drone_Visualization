@@ -5,7 +5,6 @@ def use_trace_route(ip_addr):
 	s = 'traceroute '  + ip_addr
 	cmd = subprocess.Popen(s, shell=True , stdout=subprocess.PIPE)
 	r = open('trace_res.json' , 'w')
-	# f.write('{')
 	for line in cmd.stdout:
 		ip[line.split()[1][-1:]] = True
 	r.write(json.dumps(ip))
