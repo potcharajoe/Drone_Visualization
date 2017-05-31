@@ -18,7 +18,7 @@ import MapView from 'react-native-maps';
 import axios from 'axios';
 import SocketIO from 'socket.io-client'
 
-let configApi = 'http://158.108.137.193:9090/api'
+// let configApi = 'http://158.108.137.193:9090/api'
 
 let io = SocketIO('http://192.168.8.20:9090', {jsonp:false})
 let io1 = SocketIO('http://192.168.8.11:9090', {jsonp:false})
